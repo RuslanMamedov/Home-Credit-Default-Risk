@@ -71,7 +71,7 @@ X_test = sc.transform(X_test)
 
 # Fitting Classification Model to the Training set
 from xgboost import XGBClassifier
-classifier = XGBClassifier(n_estimators=100, learning_rate=0.1, subsample=0.5, max_depth=3, min_child_weight=3)
+classifier = XGBClassifier(n_estimators=100, learning_rate=0.1, subsample=0.5, max_depth=8, min_child_weight=3)
 
 # Applying Grid Search to tune up the model
 from sklearn.model_selection import GridSearchCV
