@@ -10,6 +10,10 @@ Created on Mon Aug  6 13:51:08 2018
 import pandas as pd
 import numpy as np
 
+# Suppress warnings from pandas
+import warnings
+warnings.filterwarnings('ignore')
+
 #importing the dataset
 dataset_train=pd.read_csv('application_train.csv')
 dataset_test =pd.read_csv('application_test.csv')
