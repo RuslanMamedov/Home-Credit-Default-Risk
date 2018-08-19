@@ -47,6 +47,12 @@ dataset_test=pd.get_dummies(dataset_test)
 dataset_train=dataset_train.fillna(dataset_train.mean())
 dataset_test=dataset_test.fillna(dataset_test.mean())
 
+# Align the training and testing data, keep only columns present in both dataframes
+train_labels = dataset_train['TARGET']
+dataset_train, dataset_test = dataset_train.align(dataset_test, join = 'inner', axis = 1)
+# Add the target back in
+dataset_train['TARGET'] = train_labels
+
 # Dimension Reduction - dropping features with less than 2% correllation
 correlations = dataset_train.corr()['TARGET'].sort_values()
 correlations = correlations.reset_index().values
