@@ -45,12 +45,6 @@ dataset_test=pd.get_dummies(dataset_test)
 dataset_train=dataset_train.fillna(dataset_train.mean())
 dataset_test=dataset_test.fillna(dataset_test.mean())
 
-# Align the training and testing data, keep only columns present in both dataframes
-train_labels = dataset_train['TARGET']
-dataset_train, dataset_test = dataset_train.align(dataset_test, join = 'inner', axis = 1)
-# Add the target back in
-dataset_train['TARGET'] = train_labels
-
 # Dimension Reduction - dropping the features with less than 2% correllation
 correlations = dataset_train.corr()['TARGET'].sort_values()
 correlations = correlations.reset_index().values
@@ -62,6 +56,12 @@ print(dataset_train.shape)
 correlations = dataset_train.corr()['TARGET'].sort_values()
 print('Most Positive Correlations:\n', correlations.tail(15))
 print('\nMost Negative Correlations:\n', correlations.head(15))
+
+# Align the training and testing data, keep only columns present in both dataframes
+train_labels = dataset_train['TARGET']
+dataset_train, dataset_test = dataset_train.align(dataset_test, join = 'inner', axis = 1)
+# Add the target back in
+dataset_train['TARGET'] = train_labels
 
 #Splitting train dataset, training the model
 y=dataset_train.iloc[:,dataset_train.columns.get_loc('TARGET')].values
