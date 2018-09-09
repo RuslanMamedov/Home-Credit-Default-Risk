@@ -77,10 +77,10 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-# Fitting Classification Model to the Training set
-from xgboost import XGBClassifier
-classifier = XGBClassifier(n_estimators=100, learning_rate=0.1, subsample=0.5, max_depth=8, min_child_weight=3)
-
+# Fitting Random Forest Classification to the Training set
+from sklearn.ensemble import RandomForestClassifier
+classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)
+classifier.fit(X_train, y_train)
 '''# Applying Grid Search to tune up the model - if needed
 from sklearn.model_selection import GridSearchCV
 cv_params = {'max_depth': [1,2,3,4,5,6], 'min_child_weight': [1,2,3,4]}    # parameters to be tries in the grid search
@@ -99,8 +99,6 @@ csv.fit(X_train, y_train)
 print ('csv.best_params_')
 classifier = XGBClassifier(**csv.best_params_)'''
 
-classifier.fit(X_train, y_train)
-
 # Predicting the Test set results
 y_pred = classifier.predict(X_test)
 
@@ -118,17 +116,10 @@ X=dataset_train.values
 classifier.fit(X, y)
 X_test=dataset_test.values
 y_pred = classifier.predict_proba(X_test)[:, 1]
-
 # Submission dataframe
 submit = dataset_test[['SK_ID_CURR']]
 submit['TARGET'] = y_pred
 submit.head()
-
 # Save the submission to a csv file
 submit.to_csv('XGBoostClassification.csv', index = False)
 '''
-
-
-
-
-
